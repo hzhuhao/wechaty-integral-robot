@@ -2,9 +2,9 @@
   "name": "leet-padplus-bot",
   "version": "1.0.0",
   "description": "",
-  "main": "robot.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node robot.js"
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
