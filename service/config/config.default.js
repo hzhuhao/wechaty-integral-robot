@@ -24,13 +24,13 @@ module.exports = appInfo => {
       // host
       host: 'localhost',
       // 端口号
-      port: '3306',
+      port: '',
       // 用户名
-      user: 'root',
+      user: '',
       // 密码
-      password: 'root',
+      password: '',
       // 数据库名
-      database: 'leetrobot',
+      database: '',
     },
     // 是否加载到 app 上，默认开启
     app: true,

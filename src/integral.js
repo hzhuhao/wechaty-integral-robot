@@ -21,12 +21,9 @@ async function addScore(bot, msg) {
     if (from.includes(owner.name())) {
         if (text.includes("@")) {
             if (text.includes("积分")) {
-                
-
                 const txtArr = text.split('积分');
                 const user_name = txtArr[0].replace('@', "").trim();
                 console.log('获得积分用户：', user_name)
-
                 let option = {
                     method: 'GET',
                     url: config.servehost + '/wxuser/get',
@@ -65,26 +62,6 @@ async function addScore(bot, msg) {
         }
     }
     console.log("==============积分兑换end ===============")
-    // 获取所有群成员
-    const memberList = await room.memberList()
-   // console.log(memberList)
-    for (let i = 0; i < memberList.length; i++) {
-        // console.log(`member${i}`)
-        const member = memberList[i]
-        const obj = member.payload
-        let option = {
-            method: 'POST',
-            url: config.servehost + '/wxuser/create',
-            params: obj
-        };
-        //console.log(option)
-        // let res = await req(option);
-        // // console.log(res)
-        // let content = parseBody(res);
-        // console.log(content)
-        // console.log(`member${i}: ${member.id},${member.name()},${member.alias()},${member.friend()},${member.avatar()}`)
-    }
-    // room.say("recieved message mentioned me!",memberList[0],memberList[1])
 }
 module.exports = {
     addScore

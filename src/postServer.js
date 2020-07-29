@@ -27,12 +27,7 @@ async function roomMsg(bot, msg) {
   console.log(`text: ${text}`)
   console.log(`isRoom: ${msg.room()}`)
   console.log("=============================")
-  // await msg.say(res)
   integral.addScore(bot, msg)
-  // if(text.indexOf('好吃') > -1){
-  //   room.say(`恭喜成功获得1积分 \n 当前等级: 满30分送一份水果 \n 当前积分: 11` + '', msg.from())
-  // }
-  // 如果是群主@xx
 }
 
 
@@ -148,93 +143,6 @@ async function isRoomName(bot, msg) {
   }
   return false
 }
-
-/**
- * @description 群聊'@'自己，根据内容，分别处理 
- * @param {Object} room 群聊对象
- * @param {Object} msg 消息对象
- */
-let textApi = [
-  {
-    text: '掷骰子',
-    fun: async function (room, msg) {
-      let sayText = Math.ceil(Math.random() * 6);
-      console.log('骰子', sayText)
-      room.say(sayText + '', msg.from())
-    }
-  },
-  {
-    text: '打卡提醒',
-    fun: async function (room, msg) {
-      let logFolder = config.logFolder;
-
-      fs.readFile(logFolder, 'utf8', function (err, data) {  //从文件中读取现有的群id
-        if (err) {
-          console.log('打卡读取文件错误', err)
-        } else {
-          data = data.trim();
-          let logObj
-          if (data) {
-            console.log('n内容', data)
-            logObj = JSON.parse(data);
-
-          } else {
-            logObj = {};
-          }
-          logObj.workList ? 1 : logObj.workList = [];
-          logObj.workList.indexOf(room.id) < 0 ? logObj.workList.push(room.id) : 1;
-
-          fs.writeFile(logFolder, JSON.stringify(logObj), function (err) {//群id存到指定文件
-            if (err) {
-              console.log('打卡写入文件错误', err);
-            }
-            room.say('设置成功')
-          })
-        }
-      })
-
-    }
-  },
-  {
-    text: '取消打卡提醒',
-    fun: async function (room, msg) {
-      let logFolder = config.logFolder;
-
-      fs.readFile(logFolder, 'utf8', function (err, data) {//从文件中读取现有的群id
-        if (err) {
-          console.log('打卡读取文件错误', err)
-        } else {
-          data = data.trim();
-          let logObj
-          if (data) {
-            console.log('n内容', data)
-            logObj = JSON.parse(data);
-
-          } else {
-            room.say('未设置打卡提醒');
-            return;
-          }
-          logObj.workList ? 1 : logObj.workList = [];
-
-          let index;
-          if ((index = logObj.workList.indexOf(room.id)) < 0) { //如果没有不存在该群id
-            room.say('还未设置打卡提醒');
-          } else {
-            logObj.workList = logObj.workList.slice(0, index).concat(logObj.workList.slice(index + 1)); //去除指定的群id
-          }
-
-          fs.writeFile(logFolder, JSON.stringify(logObj), function (err) {//群id存到指定文件
-            if (err) {
-              console.log('打卡写入文件错误', err);
-            }
-            room.say('设置成功')
-          })
-        }
-      })
-
-    }
-  }
-]
 module.exports = {
   roomMsg,
   personMsg
